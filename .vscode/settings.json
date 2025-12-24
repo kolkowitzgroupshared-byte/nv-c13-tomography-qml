@@ -1,0 +1,10 @@
+{
+  "python.defaultInterpreterPath": "C:\\Users\\Saroj Chand\\miniconda3\\envs\\main_env\\python.exe",
+  "python.analysis.extraPaths": ["./src"],
+  "terminal.integrated.env.windows": {
+    "PYTHONPATH": "${workspaceFolder}\\src"
+  }
+}
+
+
+
