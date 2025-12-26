@@ -4,10 +4,9 @@ import numpy as np
 try:
     from numba import njit
 except Exception:
-    def njit(*_args, **_kwargs):
+    def njit(*_a, **_k):
         def wrap(fn): return fn
         return wrap
-
 
 def fine_decay(
     tau_us,

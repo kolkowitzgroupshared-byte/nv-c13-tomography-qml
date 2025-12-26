@@ -1,23 +1,26 @@
-﻿paths:
+﻿# configs/batch.yaml
+paths:
+  catalog_path: "data/catalogs/essem_freq_kappa_catalog_22A_49G.json"
   hyperfine_path: "data/hyperfine/nv-2.txt"
-  catalog_path: "data/catalog/essem_freq_kappa_catalog_22A_49G.json"
-  fits_path: "data/fits/2025_11_17-09_49_42-sample_204nv_s1-fcc605.json"
-  avg_counts_path: "data/avg_counts/2025_11_11-01_15_45-johnson_204nv_s6-6d8f5c.txt"
+  fits_path: "data/fits/2025_11_17-09_49_42-sample_204nv_s1-fcc605.txt"
 
+  # outputs
   out_dir: "outputs/sim_batch"
   out_prefix: "sample_204nv"
 
 batch:
-  num_spectra: 15
-  R: 1
+  num_spectra: 15          # number of NVs to simulate
+  R: 1                     # realizations per NV
   rng_seed: 20251102
 
+  # how to choose which NVs from the fits
   contrast_min: 0.10
   contrast_max: 2.0
   t2_threshold_us: 2000.0
-  sort_by: "chi2"
+  sort_by: "chi2"          # chi2 | contrast | t2
 
 sim:
+  # shared sim settings for every NV
   tau_range_us: [0.0, 100.0]
   n_tau: 600
   B_vec_G: [-41.5785, -32.7715, -27.5799]
@@ -30,6 +33,8 @@ sim:
   f_band_kHz: [10.0, 1500.0]
 
 fine:
+  # either: "from_fit" (use each NV’s fitted fine params)
+  # or: "fixed" (use the same fine params for all NVs)
   mode: "from_fit"
 
   fixed_params:
@@ -53,3 +58,4 @@ plot:
   show_env_times_comb: false
   max_site_rows: 8
   save_per_nv: true
+
