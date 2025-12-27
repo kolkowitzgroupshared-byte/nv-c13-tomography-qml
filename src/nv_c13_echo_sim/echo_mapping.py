@@ -26,58 +26,6 @@ def _synthesize_comb_only(taus_sec, p):
         osc_phi1=0.0,
     )
 
-
-def add_charge_pedestal(
-    y_core,
-    taus_us,
-    gate_G,
-    *,
-    A_ch=0.03,  # amplitude of the pedestal (0..~0.1 reasonable)
-    T_ch_us=None,  # optional readout-specific decay; None→use no extra decay
-    baseline=0.6,
-):
-    """
-    y_core: baseline - depth(τ)*E(τ)   (your existing physical echo)
-    gate_G: 0 at τ≈0, peaks at k*Trev  (same comb you already compute, normalized 0..1)
-    A_ch  : pedestal amplitude (fraction of total scale)
-    T_ch_us: if set, pedestal has its own envelope exp[-(τ/T_ch)^1] (often > T2_us)
-    """
-    tau = np.asarray(taus_us, float)
-    G = np.clip(np.asarray(gate_G, float), 0.0, 1.0)
-
-    # Optional slow decay for charge gain (often longer than spin T2)
-    if T_ch_us is not None and T_ch_us > 0:
-        E_ch = np.exp(-(tau / float(T_ch_us)))
-    else:
-        E_ch = 1.0
-
-    P = A_ch * G * E_ch  # strictly >= 0
-
-    # Headroom safety: don’t exceed physical maximum (≈1.0), but do it smoothly
-    headroom = 1.0 - y_core
-    P = np.minimum(P, np.maximum(0.0, headroom))
-
-    return y_core + P
-
-
-def apply_readout_gain(y_core, gate_G, *, beta=0.08, baseline=0.6):
-    """
-    y_core is already on your 0..1-ish PL scale with baseline ~0.6.
-    We remap around baseline so that a gain >1 lifts toward/above baseline.
-    """
-    G = np.clip(np.asarray(gate_G, float), 0.0, 1.0)
-
-    # deviation from baseline, then apply a gain that also adds a small offset piece:
-    #   y_raw = baseline + (y_core - baseline) * (1 + beta*G) + beta*G*(1 - baseline)
-    # The last term acts like a gain-induced offset in counts.
-    y_out = (
-        baseline + (y_core - baseline) * (1.0 + beta * G) + beta * G * (1.0 - baseline)
-    )
-
-    # Smooth headroom cap (no hard clip)
-    return np.minimum(y_out, 1.0 - 1e-6)
-
-
 def revivals_only_mapping(microscopic, taus_s, p):
     """
     Gate microscopic deviations to revivals AND add a zero-mean oscillatory term
@@ -116,11 +64,5 @@ def revivals_only_mapping(microscopic, taus_s, p):
     E = np.exp(-((taus_us / T2_us) ** T2_exp))
     # --- revival gate (≈0 at τ≈0, peaks at k*Trev) ---
     y_core = baseline - comb_contrast * m * mask * E
-    # --- Physically motivated gains at revivals ---
-    # A) charge pedestal
-    # y_out = add_charge_pedestal(
-    #     y_core, taus_us, mask, A_ch=0.03, T_ch_us=300.0, baseline=baseline
-    # )
-    # B) multiplicative gain
-    # y_out = apply_readout_gain(y_core, mask, beta=0.08, baseline=baseline)
+
     return y_core

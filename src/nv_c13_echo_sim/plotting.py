@@ -60,20 +60,6 @@ def _fine_param_lines(fine_params):
             out.append(f"{pretty[k]}: {sval}")
     return out
 
-
-# def _site_table_lines(site_info, max_rows=8):
-#     if not site_info:
-#         return ["(no annotated realization)"]
-#     rows = sorted(site_info, key=lambda d: -abs(d.get("Apar_kHz", 0.0)))
-#     lines = ["site  |A∥|(kHz)   r", "------------------------"]
-#     for d in rows[:max_rows]:
-#         sid = d.get("site_id", "?")
-#         apar = float(abs(d.get("Apar_kHz", 0.0)))
-#         rmag = float(d.get("r", np.nan))
-#         lines.append(f"{sid:<5} {apar:>8.0f}  {rmag:>6.2f}")
-#     if len(rows) > max_rows:
-#         lines.append(f"... (+{len(rows)-max_rows} more)")
-#     return lines
 #
 def _site_table_lines(site_info, max_rows=8):
     """
