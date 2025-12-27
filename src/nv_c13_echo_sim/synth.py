@@ -6,9 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Any, Dict, Optional, Tuple
 
-from nv_c13_tomography import simulate_random_spin_echo, plot_echo_with_sites
-from utils import nv_prior_draw
-
+from nv_c13_echo_sim import simulate_random_spin_echo, plot_echo_with_sites
+from nv_c13_echo_sim.priors import nv_prior_draw
 
 def _call_sim(
     *,

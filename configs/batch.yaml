@@ -10,7 +10,7 @@ paths:
 
 batch:
   num_spectra: 15          # number of NVs to simulate
-  R: 1                     # realizations per NV
+  R: 2                     # realizations per NV
   rng_seed: 20251102
 
   # how to choose which NVs from the fits
@@ -21,7 +21,7 @@ batch:
 
 sim:
   # shared sim settings for every NV
-  tau_range_us: [0.0, 100.0]
+  tau_range_us: [0.0, 95.0]
   n_tau: 600
   B_vec_G: [-41.5785, -32.7715, -27.5799]
 

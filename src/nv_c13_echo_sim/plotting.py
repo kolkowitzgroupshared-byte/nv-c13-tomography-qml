@@ -19,7 +19,6 @@ def set_axes_equal_3d(ax):
     ax.set_ylim3d(ymid - max_range, ymid + max_range)
     ax.set_zlim3d(zmid - max_range, zmid + max_range)
 
-
 def _echo_summary_lines(taus_us, echo):
     if len(echo) == 0:
         return []
@@ -31,7 +30,6 @@ def _echo_summary_lines(taus_us, echo):
         f"Echo range: {arr.min():.3f} … {arr.max():.3f}",
         f"⟨early⟩→⟨late⟩: {early:.3f} → {late:.3f}",
     ]
-
 
 def _fine_param_lines(fine_params):
     if not fine_params:

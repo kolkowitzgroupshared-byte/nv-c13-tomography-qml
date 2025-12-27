@@ -1,4 +1,3 @@
-# scripts/run_simulation.py
 from __future__ import annotations
 
 import json
@@ -9,9 +8,9 @@ import numpy as np
 import yaml
 import matplotlib.pyplot as plt
 
-from utils.fit_loader import build_param_matrix_from_fit, cohort_median_mad
-from utils.selection import select_nvs
-from utils.synth import synth_per_nv
+from nv_c13_echo_sim import build_param_matrix_from_fit, cohort_median_mad
+from nv_c13_echo_sim import select_nvs
+from nv_c13_echo_sim import synth_per_nv
 
 
 def _read_text_strip_bom(p: Path) -> str:
@@ -110,8 +109,8 @@ def main() -> List[Dict[str, Any]]:
     R = int(batch_cfg.get("R", 1))
     rng_seed = int(batch_cfg.get("rng_seed", 20251102))
 
-    save_per_nv = bool(plot_cfg.get("save_per_nv", True))
-    show_each_plot = bool(plot_cfg.get("show_each", False))  # <- add to config if you want
+    save_per_nv = bool(plot_cfg.get("save_per_nv", False))
+    show_each_plot = bool(plot_cfg.get("show_each", True))
 
     results: List[Dict[str, Any]] = []
     for idx in keep:
