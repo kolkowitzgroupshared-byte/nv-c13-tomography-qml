@@ -12,7 +12,7 @@ def spawn_streams(seed: Optional[int], num_streams: int, run_salt: Optional[int]
             ss = np.random.SeedSequence(int(seed), spawn_key=[int(run_salt) & 0xFFFFFFFF])
     return [np.random.default_rng(cs) for cs in ss.spawn(num_streams)]
 
-def _choose_sites(rng, present_sites, num_spins, selection_mode="uniform"):
+def choose_sites(rng, present_sites, num_spins, selection_mode="uniform"):
     present_sites = list(present_sites)
     if num_spins is None or num_spins >= len(present_sites):
         return present_sites

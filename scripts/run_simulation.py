@@ -104,10 +104,10 @@ def main() -> List[Dict[str, Any]]:
     abundance_fraction = float(sim_cfg.get("abundance_fraction", 0.011))
     num_spins = sim_cfg.get("num_spins", 1)
     num_spins = None if num_spins is None else int(num_spins)
-    selection_mode = str(sim_cfg.get("selection_mode", "top_kappa"))
+    selection_mode = str(sim_cfg.get("selection_mode", "uniform"))
     reuse_present_mask = bool(sim_cfg.get("reuse_present_mask", True))
     R = int(batch_cfg.get("R", 1))
-    rng_seed = int(batch_cfg.get("rng_seed", 20251102))
+    rng_seed = int(batch_cfg.get("rng_seed", 424242))
 
     save_per_nv = bool(plot_cfg.get("save_per_nv", False))
     show_each_plot = bool(plot_cfg.get("show_each", True))
@@ -162,9 +162,9 @@ def main() -> List[Dict[str, Any]]:
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
 
-    out_png = out_dir / f"{out_prefix}_overview.png"
-    plt.savefig(out_png, dpi=200, bbox_inches="tight")
-    print(f"Saved overview plot: {out_png.resolve()}")
+    # out_png = out_dir / f"{out_prefix}_overview.png"
+    # plt.savefig(out_png, dpi=200, bbox_inches="tight")
+    # print(f"Saved overview plot: {out_png.resolve()}")
     plt.show()
 
     return results

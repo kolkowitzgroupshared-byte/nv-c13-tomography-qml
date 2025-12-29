@@ -9,9 +9,9 @@ paths:
   out_prefix: "sample_204nv"
 
 batch:
-  num_spectra: 15          # number of NVs to simulate
+  num_spectra: 150          # number of NVs to simulate
   R: 2                     # realizations per NV
-  rng_seed: 20251102
+  rng_seed: 424242
 
   # how to choose which NVs from the fits
   contrast_min: 0.10
@@ -27,7 +27,7 @@ sim:
 
   abundance_fraction: 0.011
   num_spins: 1
-  selection_mode: "top_kappa"
+  selection_mode: "top_kappa"  # uniform | distance_weighted | top_kappa
   reuse_present_mask: true
   distance_cutoff_A: 22.0
   f_band_kHz: [10.0, 1500.0]

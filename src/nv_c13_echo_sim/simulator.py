@@ -5,7 +5,7 @@ from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 import json
 
-from .rng import spawn_streams, _choose_sites
+from .rng import spawn_streams, choose_sites
 from .hyperfine import make_R_NV, compute_hyperfine_components
 from .echo_core import compute_echo_signal, compute_echo_signal_from_catalog
 from .fine_decay import fine_decay, _comb_quartic_powerlaw  # if needed for revivals_only_mapping
@@ -371,7 +371,7 @@ def simulate_random_spin_echo(
                 present_sites = filtered
 
         # Choose final subset (or take all)
-        chosen_sites = _choose_sites(rng_r, present_sites, num_spins, selection_mode)
+        chosen_sites = choose_sites(rng_r, present_sites, num_spins, selection_mode)
         chosen_counts.append(len(chosen_sites))
         picked_ids = [s["site_id"] for s in chosen_sites]
         picked_ids_per_realization.append(picked_ids)
